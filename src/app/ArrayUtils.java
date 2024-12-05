@@ -4,56 +4,54 @@ public class ArrayUtils {
 
     public static void mergeSort(int[] array) {
         if (array.length < 2) {
-            return;
-    }
+            return; // перевіряємо чи треба взагалі сортування (більше 2 елементів у масиві?)
+        }
 
+        // Ділимо масив навпіл
         int mid = array.length / 2;
         int[] left = new int[mid];
         int[] right = new int[array.length - mid];
-        
 
-//    public static void merge(int[] arr, int left, int mid, int right) {
-//        int n1 = mid - left + 1;
-//        int n2 = right - mid;
-//
-//        // Створюємо тимчасові підмасиви
-//        int[] L = new int[n1];
-//        int[] R = new int[n2];
-//
-//        // Копіюємо дані в тимчасові підмасиви
-//        for (int i = 0; i < n1; ++i)
-//            L[i] = arr[left + i];
-//        for (int j = 0; j < n2; ++j)
-//            R[j] = arr[mid + 1 + j];
-//
-//        // Зливаємо тимчасові підмасиви
-//        int i = 0, j = 0;
-//        int k = left;
-//        while (i < n1 && j < n2) {
-//            if (L[i] <= R[j]) {
-//                arr[k] = L[i];
-//                i++;
-//            } else {
-//                arr[k] = R[j];
-//                j++;
-//            }
-//            k++;
-//        }
-//
-//        // Копіюємо залишки L[], якщо такі є
-//        while (i < n1) {
-//            arr[k] = L[i];
-//            i++;
-//            k++;
-//        }
-//
-//        // Копіюємо залишки R[], якщо такі є
-//        while (j < n2) {
-//            arr[k] = R[j];
-//            j++;
-//            k++;
-//        }
-//    }
+        // Копіюємо основний масив у 2 масиви: лівий та правий
+        System.arraycopy(array, 0, left, 0, mid);
+        System.arraycopy(array, mid, right, 0, array.length - mid);
+
+        /*
+        В методі викликаємо той же метод (рекурсія) для розділення до тих пір,
+        доки масив не розділиться на безліч одновимірних масивів
+        "Розділяй і володарюй"
+         */
+        mergeSort(left);
+        mergeSort(right);
+
+        // Зливаємо вже сортовані дані
+        merge(array, left, right);
+    }
+
+    private static void merge(int[] array, int[] left, int[] right) {
+        int a = 0, l = 0, r = 0; // індекси для кожного масиву
+
+        // Цикл буде тривати доти, доки один з масивів буде мати непройдені елементи
+        while (l < left.length && r < right.length) {
+            /* перевіряємо чи елемент з left більший, чим з right і відповідно
+             до умови додаємо його у відповідну частину загального масиву
+             */
+            if (left[l] <= right[r]) {
+                array[a++] = left[l++];
+            } else {
+                array[a++] = right[r++];
+            }
+        }
+
+        // перевіряємо сторони/залишки і додаємо їх у масив
+        while (l < left.length) {
+            array[a++] = left[l++];
+        }
+
+        while (r < right.length) {
+            array[a++] = right[r++];
+        }
+    }
 
     public static int binarySearch(int[] array, int target) {
         int left = 0;
