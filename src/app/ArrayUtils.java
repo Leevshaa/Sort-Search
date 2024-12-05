@@ -2,7 +2,7 @@ package app;
 
 public class ArrayUtils {
 
-    public static void mergeSort(int[] array) {
+    private static void mergeSort(int[] array) {
         if (array.length < 2) {
             return; // перевіряємо чи треба взагалі сортування (більше 2 елементів у масиві?)
         }
@@ -26,6 +26,11 @@ public class ArrayUtils {
 
         // Зливаємо вже сортовані дані
         merge(array, left, right);
+    }
+
+    public int[] getMergeSort(int[] array) {
+        mergeSort(array);
+        return array;
     }
 
     private static void merge(int[] array, int[] left, int[] right) {
@@ -53,7 +58,7 @@ public class ArrayUtils {
         }
     }
 
-    public static int binarySearch(int[] array, int target) {
+    private static int binarySearch(int[] array, int target) {
         // ділимо масив на половини
         int left = 0;
         int right = array.length - 1;
@@ -75,5 +80,9 @@ public class ArrayUtils {
         }
         // Якщо шукане значення не знайдено, повертаємо -1
         return -1;
+    }
+
+    public int getBinarySearch(int[] array, int target) {
+        return binarySearch(array, target);
     }
 }
