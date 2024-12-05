@@ -54,27 +54,25 @@ public class ArrayUtils {
     }
 
     public static int binarySearch(int[] array, int target) {
+        // ділимо масив на половини
         int left = 0;
         int right = array.length - 1;
 
         while (left <= right) {
-            int mid = left + (right - left) / 2;
+            int mid = left + (right - left) / 2; // знаходимо середину
 
-            // Перевіряємо, чи знайшли шукане значення
             if (array[mid] == target) {
-                return mid;
-            }
-
-            // Якщо шукане значення менше середнього, змінюємо праву границю
-            if (array[mid] < target) {
+                return mid; // перевіряємо чи шукане значення знаходиться посередині
+            } else if (array[mid] < target) {
                 left = mid + 1;
-            }
-            // Інакше змінюємо ліву границю
-            else {
-                right = mid - 1;
+                /*
+                Якщо не в середині, то передвигаємо грань пошуку
+                зліва до середини (шукаємо в правій частині)
+                 */
+            } else {
+                right = mid - 1; // шукаємо в лівій частині
             }
         }
-
         // Якщо шукане значення не знайдено, повертаємо -1
         return -1;
     }
